@@ -21,6 +21,13 @@ const db = mysql.createConnection(
   console.log(`Connected to the employees_db database.`)
 );
 
+db.promise().query("SELECT 1")
+  .then( ([rows,fields]) => {
+    console.log(rows);
+  })
+  .catch(console.log)
+  .then( () => db.end());
+
 
 app.use((req, res) => {
   res.status(404).end();
