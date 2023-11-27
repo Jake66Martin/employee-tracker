@@ -13,7 +13,10 @@ const choices = [
 
 function init() {
 
-    inquirer
+    function mainPrompt() {
+    
+        inquirer
+
   .prompt([
     {
         type: 'list',
@@ -27,13 +30,20 @@ function init() {
 
     if (response.options === choices[0]) {
        const getdepartment = new Queries
-        const data = getdepartment.getDepartments()
+        getdepartment.getDepartments()
       }
 
-   
-    
+      if (response.options === choices[1]) {
+        const getdepartment = new Queries
+         getdepartment.getRoles()
+       }
+
+       mainPrompt();
   
-})
+});
+
+    };
+mainPrompt();
 };
 
 init();
