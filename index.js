@@ -1,7 +1,5 @@
 const inquirer = require("inquirer");
 const Queries = require("./lib/queries");
-const db = require("./server.js")
-
 
 const choices = [
   "view all departments",
@@ -13,8 +11,7 @@ const choices = [
   "update an employee role",
 ];
 
-function init() {
-  // function mainPrompt() {
+function mainPrompt() {
   inquirer
 
     .prompt([
@@ -37,6 +34,7 @@ function init() {
       if (response.options === choices[0]) {
         const getdepartment = new Queries();
         getdepartment.getDepartments();
+        mainPrompt();
       }
 
       if (response.options === choices[1]) {
@@ -48,14 +46,10 @@ function init() {
         const getemployee = new Queries();
         getemployee.getEmployees();
       }
-
-      //  mainPrompt();
-      
     });
 }
-// mainPrompt();
-// };
+function init() {
+  mainPrompt();
+}
 
 init();
-
-
