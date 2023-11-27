@@ -1,4 +1,5 @@
 const inquirer = require('inquirer');
+const Queries = require('./lib/queries')
 
 const choices = [
     "view all departments",
@@ -25,9 +26,18 @@ function init() {
   .then((response) => {
     
     
-    
+    if (response.options === choices[0]) {
+        console.log('hello')
+    }
 
-    return response;
+
+    if (response.options === choices[0]) {
+       const getdepartment = new Queries
+        const data = getdepartment.getDepartments()
+        console.log(data)
+      }
+
+   
     
   
 })
