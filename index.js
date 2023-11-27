@@ -24,17 +24,10 @@ function init() {
    
   ])
   .then((response) => {
-    
-    
-    if (response.options === choices[0]) {
-        console.log('hello')
-    }
-
 
     if (response.options === choices[0]) {
        const getdepartment = new Queries
         const data = getdepartment.getDepartments()
-        console.log(data)
       }
 
    
