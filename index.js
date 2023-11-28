@@ -11,6 +11,7 @@ const choices = [
   "update an employee role",
   "update an employee manager",
   "view employees by manager",
+  "view employees by department",
 ];
 
 function mainPrompt() {
@@ -31,6 +32,7 @@ function mainPrompt() {
           choices[6],
           choices[7],
           choices[8],
+          choices[9],
         ],
       },
     ])
@@ -64,6 +66,9 @@ function mainPrompt() {
           break;
         case choices[8]:
           viewEmployeeByManager();
+          break;
+        case choices[9]:
+          viewEmployeeByDepartment();
           break;
 
         default:
@@ -304,15 +309,37 @@ function viewEmployeeByManager() {
       const id = res.id;
 
       console.log(id);
-      
 
       Queries.viewEmployeeByManager(id)
-      .then(([result]) => {
-        let employee = result;
-        console.log("\n");
-        console.table(employee);
-      })
-      .then(() => init());
+        .then(([result]) => {
+          let employee = result;
+          console.log("\n");
+          console.table(employee);
+        })
+        .then(() => init());
+    });
+}
+
+function viewEmployeeByDepartment() {
+  inquirer
+    .prompt([
+      {
+        name: "id",
+        message: "What is the department id?",
+      },
+    ])
+    .then((res) => {
+      const id = res.id;
+
+      console.log(id);
+
+      Queries.viewEmployeeByDepartment(id)
+        .then(([result]) => {
+          let employee = result;
+          console.log("\n");
+          console.table(employee);
+        })
+        .then(() => init());
     });
 }
 
