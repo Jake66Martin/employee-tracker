@@ -9,6 +9,7 @@ const choices = [
   "add a role",
   "add an employee",
   "update an employee role",
+  "update an employee manager",
 ];
 
 function mainPrompt() {
@@ -27,6 +28,7 @@ function mainPrompt() {
           choices[4],
           choices[5],
           choices[6],
+          choices[7],
         ],
       },
     ])
@@ -54,6 +56,9 @@ function mainPrompt() {
           break;
         case choices[6]:
           updateEmployee();
+          break;
+        case choices[7]:
+          updateEmployeeManager();
           break;
 
         default:
@@ -198,7 +203,7 @@ function addEmployee() {
                 .then((res) => {
                   let managerid = res.managerid;
 
-                  if (managerid === "null") {
+                  if (managerid === "null" || managerid === "") {
                     managerid = null;
                   }
 
@@ -239,9 +244,43 @@ function updateEmployee() {
 
           console.log(id);
           console.log(role);
-          
 
           Queries.updateEmployee(role, id)
+            .then(() => console.log(`Updated employee role to the database`))
+            .then(() => init());
+        });
+    });
+}
+
+function updateEmployeeManager() {
+  inquirer
+    .prompt([
+      {
+        name: "id",
+        message: "What is the employee id?",
+      },
+    ])
+    .then((res) => {
+      const id = res.id;
+
+      inquirer
+        .prompt([
+          {
+            name: "manager",
+            message: "What is the new manager id (or null)?",
+          },
+        ])
+        .then((res) => {
+          let manager = res.manager;
+
+          if (manager === "null" || manager === "") {
+            manager = null;
+          }
+
+          console.log(id);
+          console.log(manager);
+
+          Queries.updateEmployeeManager(manager, id)
             .then(() => console.log(`Updated employee role to the database`))
             .then(() => init());
         });
