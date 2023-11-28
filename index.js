@@ -31,20 +31,20 @@ function mainPrompt() {
       },
     ])
     .then((response) => {
-      if (response.options === choices[0]) {
-        const getdepartment = new Queries();
-        getdepartment.getDepartments();
-        mainPrompt();
-      }
+      let choice = response.options;
 
-      if (response.options === choices[1]) {
-        const getroles = new Queries();
-        getroles.getRoles();
-      }
-
-      if (response.options === choices[2]) {
-        const getemployee = new Queries();
-        getemployee.getEmployees();
+      switch (choice) {
+        case choices[0]:
+          viewDepartment();
+          break;
+        case choices[1]:
+          viewRoles();
+          break;
+        case choices[2]:
+          viewEmployees();
+          break;
+        default:
+          quit();
       }
     });
 }
@@ -53,3 +53,37 @@ function init() {
 }
 
 init();
+
+const viewDepartment = function () {
+  Queries.getDepartments()
+    .then(([result]) => {
+      let department = result;
+      console.log("\n");
+      console.table(department);
+    })
+    .then(() => init());
+};
+
+const viewRoles = function () {
+  Queries.getRoles()
+    .then(([result]) => {
+      let role = result;
+      console.log("\n");
+      console.table(role);
+    })
+    .then(() => init());
+};
+
+const viewEmployees = function () {
+  Queries.getEmployees()
+    .then(([result]) => {
+      let employee = result;
+      console.log("\n");
+      console.table(employee);
+    })
+    .then(() => init());
+};
+
+function quit() {
+  process.exit();
+}
