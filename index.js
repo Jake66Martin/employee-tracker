@@ -149,12 +149,101 @@ function addRole() {
               console.log(salary);
               console.log(department);
 
-              
-              
               Queries.newRole(title, salary, department)
                 .then(() => console.log(`Added role to the database`))
                 .then(() => init());
             });
+        });
+    });
+}
+
+function addEmployee() {
+  inquirer
+    .prompt([
+      {
+        name: "firstname",
+        message: "What is the employees first name",
+      },
+    ])
+    .then((res) => {
+      const firstname = res.firstname;
+
+      inquirer
+        .prompt([
+          {
+            name: "lastname",
+            message: "What is the employees last name?",
+          },
+        ])
+        .then((res) => {
+          const lastname = res.lastname;
+
+          inquirer
+            .prompt([
+              {
+                name: "roleid",
+                message: "What is the employees role id?",
+              },
+            ])
+            .then((res) => {
+              const roleid = res.roleid;
+
+              inquirer
+                .prompt([
+                  {
+                    name: "managerid",
+                    message: "What is the employees manager id?",
+                  },
+                ])
+                .then((res) => {
+                  let managerid = res.managerid;
+
+                  if (managerid === "null") {
+                    managerid = null;
+                  }
+
+                  console.log(firstname);
+                  console.log(lastname);
+                  console.log(roleid);
+                  console.log(managerid);
+
+                  Queries.newEmployee(firstname, lastname, roleid, managerid)
+                    .then(() => console.log(`Added employee to the database`))
+                    .then(() => init());
+                });
+            });
+        });
+    });
+}
+
+function updateEmployee() {
+  inquirer
+    .prompt([
+      {
+        name: "id",
+        message: "What is the employee id?",
+      },
+    ])
+    .then((res) => {
+      const id = res.id;
+
+      inquirer
+        .prompt([
+          {
+            name: "role",
+            message: "What is the new role id?",
+          },
+        ])
+        .then((res) => {
+          const role = res.role;
+
+          console.log(id);
+          console.log(role);
+          
+
+          Queries.updateEmployee(role, id)
+            .then(() => console.log(`Updated employee role to the database`))
+            .then(() => init());
         });
     });
 }
