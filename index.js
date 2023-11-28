@@ -118,12 +118,12 @@ function addRole() {
   inquirer
     .prompt([
       {
-        name: "name",
-        message: "What is the name of the role?",
+        name: "title",
+        message: "What is the title of the role?",
       },
     ])
     .then((res) => {
-      const name = res.name;
+      const title = res.title;
 
       inquirer
         .prompt([
@@ -139,15 +139,21 @@ function addRole() {
             .prompt([
               {
                 name: "department",
-                message: "What is the name of the department?",
+                message: "What is the department id?",
               },
             ])
             .then((res) => {
               const department = res.department;
 
-              console.log(name);
+              console.log(title);
               console.log(salary);
               console.log(department);
+
+              
+              
+              Queries.newRole(title, salary, department)
+                .then(() => console.log(`Added role to the database`))
+                .then(() => init());
             });
         });
     });
