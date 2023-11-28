@@ -43,6 +43,19 @@ function mainPrompt() {
         case choices[2]:
           viewEmployees();
           break;
+        case choices[3]:
+          addDepartment();
+          break;
+        case choices[4]:
+          addRole();
+          break;
+        case choices[5]:
+          addEmployee();
+          break;
+        case choices[6]:
+          updateEmployee();
+          break;
+
         default:
           quit();
       }
@@ -83,6 +96,67 @@ const viewEmployees = function () {
     })
     .then(() => init());
 };
+
+function addDepartment() {
+  inquirer
+  .prompt([
+    {
+      name: "name",
+      message: "What is the name of the department?"
+    }
+  ])
+    .then(res => {
+      let name = res.name;
+      console.log(name)
+      Queries.newDepartment(name)
+        .then(() => console.log(`Added ${name} to the database`))
+        .then(() => init())
+    })
+}
+
+function addRole() {
+  inquirer
+  .prompt([
+    {
+      name: "name",
+      message: "What is the name of the role?"
+    }
+  ])
+    .then(res => {
+
+      const name = res.name
+
+       inquirer
+      .prompt([
+        {
+          name: "salary",
+          message: "What is the salary?"
+        }
+      ]).then( res => {
+
+        const salary = res.salary
+
+        inquirer
+        .prompt([
+          {
+            name: "department",
+            message: "What is the name of the department?"
+          }
+        ])
+      }).then (res => {
+
+        const department = res.department
+
+        console.log(name)
+        console.log(salary)
+        console.log(department)
+      })
+      // let name = res;
+      // Queries.newDepartment(name.name)
+      //   .then(() => console.log(`Added ${name.name} to the database`))
+      //   .then(() => init())
+    })
+}
 
 function quit() {
   process.exit();
