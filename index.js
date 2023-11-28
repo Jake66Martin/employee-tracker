@@ -10,6 +10,7 @@ const choices = [
   "add an employee",
   "update an employee role",
   "update an employee manager",
+  "view employees by manager",
 ];
 
 function mainPrompt() {
@@ -29,6 +30,7 @@ function mainPrompt() {
           choices[5],
           choices[6],
           choices[7],
+          choices[8],
         ],
       },
     ])
@@ -59,6 +61,9 @@ function mainPrompt() {
           break;
         case choices[7]:
           updateEmployeeManager();
+          break;
+        case choices[8]:
+          viewEmployeeByManager();
           break;
 
         default:
@@ -281,9 +286,33 @@ function updateEmployeeManager() {
           console.log(manager);
 
           Queries.updateEmployeeManager(manager, id)
-            .then(() => console.log(`Updated employee role to the database`))
+            .then(() => console.log(`Updated employee manager to the database`))
             .then(() => init());
         });
+    });
+}
+
+function viewEmployeeByManager() {
+  inquirer
+    .prompt([
+      {
+        name: "id",
+        message: "What is the manager id?",
+      },
+    ])
+    .then((res) => {
+      const id = res.id;
+
+      console.log(id);
+      
+
+      Queries.viewEmployeeByManager(id)
+      .then(([result]) => {
+        let employee = result;
+        console.log("\n");
+        console.table(employee);
+      })
+      .then(() => init());
     });
 }
 
