@@ -15,6 +15,7 @@ const choices = [
   "delete a department",
   "delete a role",
   "delete an employee",
+  "view total department budget",
 ];
 
 function mainPrompt() {
@@ -39,6 +40,7 @@ function mainPrompt() {
           choices[10],
           choices[11],
           choices[12],
+          choices[13],
         ],
       },
     ])
@@ -84,6 +86,9 @@ function mainPrompt() {
           break;
         case choices[12]:
           deleteEmployee();
+          break;
+        case choices[13]:
+          viewBudget();
           break;
 
         default:
@@ -358,8 +363,6 @@ function viewEmployeeByDepartment() {
     });
 }
 
-
-
 function deleteDepartment() {
   inquirer
     .prompt([
@@ -374,8 +377,8 @@ function deleteDepartment() {
       console.log(id);
 
       Queries.deleteDepartment(id)
-      .then(console.log("department deleted"))
-      .then(() => init());
+        .then(console.log("department deleted"))
+        .then(() => init());
     });
 }
 
@@ -393,8 +396,8 @@ function deleteRole() {
       console.log(id);
 
       Queries.deleteRole(id)
-      .then(console.log("role deleted"))
-      .then(() => init());
+        .then(console.log("role deleted"))
+        .then(() => init());
     });
 }
 
@@ -412,8 +415,31 @@ function deleteEmployee() {
       console.log(id);
 
       Queries.deleteEmployee(id)
-      .then(console.log("employee deleted"))
-      .then(() => init());
+        .then(console.log("employee deleted"))
+        .then(() => init());
+    });
+}
+
+function viewBudget() {
+  inquirer
+    .prompt([
+      {
+        name: "id",
+        message: "What is the department id?",
+      },
+    ])
+    .then((res) => {
+      const id = res.id;
+
+      console.log(id);
+
+      Queries.viewBudget(id)
+        .then(([result]) => {
+          let employee = result;
+          console.log("\n");
+          console.table(employee);
+        })
+        .then(() => init());
     });
 }
 
