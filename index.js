@@ -79,6 +79,12 @@ function mainPrompt() {
         case choices[10]:
           deleteDepartment();
           break;
+        case choices[11]:
+          deleteRole();
+          break;
+        case choices[12]:
+          deleteEmployee();
+          break;
 
         default:
           quit();
@@ -352,22 +358,63 @@ function viewEmployeeByDepartment() {
     });
 }
 
+
+
 function deleteDepartment() {
   inquirer
-  .prompt([
-    {
-      name: "id",
-      message: "What is the department id?",
-    },
-  ])
-  .then((res) => {
-    const id = res.id;
+    .prompt([
+      {
+        name: "id",
+        message: "What is the department id?",
+      },
+    ])
+    .then((res) => {
+      const id = res.id;
 
-    console.log(id);
+      console.log(id);
 
-    Queries.deleteDepartment(id)
+      Queries.deleteDepartment(id)
+      .then(console.log("department deleted"))
       .then(() => init());
-  });
+    });
+}
+
+function deleteRole() {
+  inquirer
+    .prompt([
+      {
+        name: "id",
+        message: "What is the role id?",
+      },
+    ])
+    .then((res) => {
+      const id = res.id;
+
+      console.log(id);
+
+      Queries.deleteRole(id)
+      .then(console.log("role deleted"))
+      .then(() => init());
+    });
+}
+
+function deleteEmployee() {
+  inquirer
+    .prompt([
+      {
+        name: "id",
+        message: "What is the employee id?",
+      },
+    ])
+    .then((res) => {
+      const id = res.id;
+
+      console.log(id);
+
+      Queries.deleteEmployee(id)
+      .then(console.log("employee deleted"))
+      .then(() => init());
+    });
 }
 
 function quit() {
