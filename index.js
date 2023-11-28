@@ -12,6 +12,9 @@ const choices = [
   "update an employee manager",
   "view employees by manager",
   "view employees by department",
+  "delete a department",
+  "delete a role",
+  "delete an employee",
 ];
 
 function mainPrompt() {
@@ -33,6 +36,9 @@ function mainPrompt() {
           choices[7],
           choices[8],
           choices[9],
+          choices[10],
+          choices[11],
+          choices[12],
         ],
       },
     ])
@@ -69,6 +75,9 @@ function mainPrompt() {
           break;
         case choices[9]:
           viewEmployeeByDepartment();
+          break;
+        case choices[10]:
+          deleteDepartment();
           break;
 
         default:
@@ -341,6 +350,24 @@ function viewEmployeeByDepartment() {
         })
         .then(() => init());
     });
+}
+
+function deleteDepartment() {
+  inquirer
+  .prompt([
+    {
+      name: "id",
+      message: "What is the department id?",
+    },
+  ])
+  .then((res) => {
+    const id = res.id;
+
+    console.log(id);
+
+    Queries.deleteDepartment(id)
+      .then(() => init());
+  });
 }
 
 function quit() {
