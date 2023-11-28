@@ -99,63 +99,58 @@ const viewEmployees = function () {
 
 function addDepartment() {
   inquirer
-  .prompt([
-    {
-      name: "name",
-      message: "What is the name of the department?"
-    }
-  ])
-    .then(res => {
+    .prompt([
+      {
+        name: "name",
+        message: "What is the name of the department?",
+      },
+    ])
+    .then((res) => {
       let name = res.name;
-      console.log(name)
+      console.log(name);
       Queries.newDepartment(name)
         .then(() => console.log(`Added ${name} to the database`))
-        .then(() => init())
-    })
+        .then(() => init());
+    });
 }
 
 function addRole() {
   inquirer
-  .prompt([
-    {
-      name: "name",
-      message: "What is the name of the role?"
-    }
-  ])
-    .then(res => {
+    .prompt([
+      {
+        name: "name",
+        message: "What is the name of the role?",
+      },
+    ])
+    .then((res) => {
+      const name = res.name;
 
-      const name = res.name
-
-       inquirer
-      .prompt([
-        {
-          name: "salary",
-          message: "What is the salary?"
-        }
-      ]).then( res => {
-
-        const salary = res.salary
-
-        inquirer
+      inquirer
         .prompt([
           {
-            name: "department",
-            message: "What is the name of the department?"
-          }
+            name: "salary",
+            message: "What is the salary?",
+          },
         ])
-      }).then (res => {
+        .then((res) => {
+          const salary = res.salary;
 
-        const department = res.department
+          inquirer
+            .prompt([
+              {
+                name: "department",
+                message: "What is the name of the department?",
+              },
+            ])
+            .then((res) => {
+              const department = res.department;
 
-        console.log(name)
-        console.log(salary)
-        console.log(department)
-      })
-      // let name = res;
-      // Queries.newDepartment(name.name)
-      //   .then(() => console.log(`Added ${name.name} to the database`))
-      //   .then(() => init())
-    })
+              console.log(name);
+              console.log(salary);
+              console.log(department);
+            });
+        });
+    });
 }
 
 function quit() {
